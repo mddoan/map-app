@@ -45,21 +45,6 @@ android:orientation="vertical"  >
                 android:id="@+id/editTextDestination"
                 style="@style/editTextStylePortrait"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <TextView
-                style="@style/labelStylePortrait"
-                android:text="Shortest Distance:"/>
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/checkboxShortest"
-                style="@style/checkboxStylePortrait"
-                android:buttonTint="@color/colorWhite"
-                android:onClick="onCheckboxClicked"/>
-        </LinearLayout>
 
 
         <LinearLayout
@@ -92,6 +77,21 @@ android:orientation="vertical"  >
                 android:buttonTint="@color/colorWhite"
                 android:onClick="onCheckboxClicked"/>
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Shortest Distance:"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkboxShortest"
+                style="@style/checkboxStylePortrait"
+                android:buttonTint="@color/colorWhite"
+                android:onClick="onCheckboxClicked"/>
         </LinearLayout>
 
         <LinearLayout

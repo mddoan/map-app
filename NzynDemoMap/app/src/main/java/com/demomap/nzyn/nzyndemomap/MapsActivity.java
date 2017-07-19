@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -42,7 +43,7 @@ import com.demomap.nzyn.nzyndemomap.utils.PermissionUtils;
 import com.demomap.nzyn.nzyndemomap.builder.RoutesBuilder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
+//import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -109,7 +110,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * Provides access to the Fused Location Provider API.
      */
-    private FusedLocationProviderClient mFusedLocationClient;
+//    private FusedLocationProviderClient mFusedLocationClient;
 
     /**
      * Tracks whether the user has requested an address. Becomes true when the user requests an
@@ -120,6 +121,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(TAG, "onCreate");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -132,15 +134,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         checkBoxFreeway = (CheckBox) findViewById(R.id.checkboxFreeway);
         checkBoxShowTraffic = (CheckBox) findViewById(R.id.checkboxTrafic);
         checkBoxShortest = (CheckBox) findViewById(R.id.checkboxShortest);
-
-
-//        Button buttonZoomIn = (Button) findViewById(R.id.buttonZoomIn);
-//        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                zoomIn();
-//            }
-//        });
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -169,14 +162,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void afterTextChanged(Editable s) {
             if(editTextStart.getEditableText() == s){
                 startName = s.toString();
-                return;
-            }
-            if(editTextDestination.getEditableText() == s){
+            }else if(editTextDestination.getEditableText() == s){
                 destinationName = s.toString();
-                return;
             }
+            processRoute();
         }
     };
+
+    private void processRoute(){
+        if(TextUtils.isEmpty(startName)){
+            return;
+        }
+        if(TextUtils.isEmpty(destinationName)){
+            return;
+        }
+        if(mMap != null) {
+            getDirection();
+        }
+    }
 
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
@@ -262,10 +265,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         zoomIntoDeviceLocation();
+        if(!TextUtils.isEmpty(startName) && !TextUtils.isEmpty(destinationName)){
+            getDirection();
+        }
     }
 
     private void focusToAPoint(LatLng latLng, float zoom) {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
     private synchronized GoogleApiClient buildGoogleAPIClient() {
@@ -443,7 +449,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLngBounds bounds = builder.build();
         int padding = 200; // offset from edges of the map in pixels
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        mMap.animateCamera(cu);
+        mMap.moveCamera(cu);
 
     }
 
@@ -598,39 +604,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Gets the address for the last known location.
      */
     @SuppressWarnings("MissingPermission")
-    private void getAddress() {
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location == null) {
-                            Log.w(TAG, "onSuccess:null");
-                            return;
-                        }
-
-                        mLastLocation = location;
-
-                        // Determine whether a Geocoder is available.
-                        if (!Geocoder.isPresent()) {
-                            showSnackbar(getString(R.string.no_geocoder_available));
-                            return;
-                        }
-
-                        // If the user pressed the fetch address button before we had the location,
-                        // this will be set to true indicating that we should kick off the intent
-                        // service after fetching the location.
-                        if (mAddressRequested) {
-                            startIntentService();
-                        }
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "getLastLocation:onFailure", e);
-                    }
-                });
-    }
+//    private void getAddress() {
+//        mFusedLocationClient.getLastLocation()
+//                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                    @Override
+//                    public void onSuccess(Location location) {
+//                        if (location == null) {
+//                            Log.w(TAG, "onSuccess:null");
+//                            return;
+//                        }
+//
+//                        mLastLocation = location;
+//
+//                        // Determine whether a Geocoder is available.
+//                        if (!Geocoder.isPresent()) {
+//                            showSnackbar(getString(R.string.no_geocoder_available));
+//                            return;
+//                        }
+//
+//                        // If the user pressed the fetch address button before we had the location,
+//                        // this will be set to true indicating that we should kick off the intent
+//                        // service after fetching the location.
+//                        if (mAddressRequested) {
+//                            startIntentService();
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(this, new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "getLastLocation:onFailure", e);
+//                    }
+//                });
+//    }
 
     /**
      * Updates the address in the UI.
@@ -696,4 +702,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setAction(getString(actionStringId), listener).show();
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        outState.putString("start", startName);
+        outState.putString("destination", destinationName);
+        outState.putBoolean("checkbox_traffic", checkBoxShowTraffic.isChecked());
+        outState.putBoolean("checkbox_freeway", checkBoxFreeway.isChecked());
+        outState.putBoolean("checkbox_shortest", checkBoxShortest.isChecked());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        startName = savedInstanceState.getString("start");
+        destinationName = savedInstanceState.getString("destination");
+        editTextStart.setText(startName);
+        editTextDestination.setText(destinationName);
+        checkBoxShowTraffic.setChecked(savedInstanceState.getBoolean("checkbox_traffic"));
+        checkBoxFreeway.setChecked(savedInstanceState.getBoolean("checkbox_freeway"));
+        checkBoxShortest.setChecked(savedInstanceState.getBoolean("checkbox_shortest"));
+    }
 }
