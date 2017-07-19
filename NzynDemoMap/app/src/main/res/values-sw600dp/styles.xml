@@ -1,0 +1,76 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="textSize">
+        <item name="android:textSize">@dimen/textSize</item>
+    </style>
+    <style name="labelStylePortrait" parent="textSize">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+    <style name="editTextStylePortrait" parent="textSize">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="android:inputType">textNoSuggestions</item>
+    </style>
+    <style name="checkboxStylePortrait">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
+
+
+    <style name="dividedScreenContainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="labelStyleLandscape" parent="textSize">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorBlue</item>
+    </style>
+
+    <style name="editTextStyleLandscape" parent="textSize">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="checkboxStyleLandscape">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorWhite</item>
+        <item name="android:scaleX">1.8</item>
+        <item name="android:scaleY">1.8</item>
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+</resources>

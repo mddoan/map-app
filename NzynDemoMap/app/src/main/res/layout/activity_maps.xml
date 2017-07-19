@@ -1,0 +1,126 @@
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:map="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="com.demomap.nzyn.nzyndemomap.MapsActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"  >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/map_portrait"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="2dp">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Start:"/>
+
+            <EditText
+                android:id="@+id/editTextStart"
+                style="@style/editTextStylePortrait"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Destination:"/>
+            <EditText
+                android:id="@+id/editTextDestination"
+                style="@style/editTextStylePortrait"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Shortest Distance:"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkboxShortest"
+                style="@style/checkboxStylePortrait"
+                android:buttonTint="@color/colorWhite"
+                android:onClick="onCheckboxClicked"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Show Traffic:"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkboxTrafic"
+                style="@style/checkboxStylePortrait"
+                android:buttonTint="@color/colorWhite"
+                android:onClick="onCheckboxClicked"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                style="@style/labelStylePortrait"
+                android:text="Use Freeways:"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkboxFreeway"
+                style="@style/checkboxStylePortrait"
+                android:buttonTint="@color/colorWhite"
+                android:onClick="onCheckboxClicked"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:text="Time to Destination:"
+                style="@style/labelStylePortrait"/>
+            <TextView
+                android:id="@+id/textViewDuration"
+                style="@style/editTextStylePortrait"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7">
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    
+</LinearLayout>
