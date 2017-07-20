@@ -26,9 +26,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -93,6 +96,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private CheckBox checkBoxFreeway;
     private CheckBox checkBoxShortest;
     private CheckBox checkBoxShowTraffic;
+    private Location mCurrentLocation;
     /**
      * The formatted location address.
      */
@@ -128,9 +132,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         editTextStart = (EditText) findViewById(R.id.editTextStart);
         editTextStart.addTextChangedListener(textWatcher);
-        editTextStart.requestFocus();
+        editTextStart.setOnEditorActionListener(editorActionListener);
+        editTextStart.setFocusable(false);
+        editTextStart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                editTextStart.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
         editTextDestination = (EditText) findViewById(R.id.editTextDestination);
         editTextDestination.addTextChangedListener(textWatcher);
+        editTextDestination.setOnEditorActionListener(editorActionListener);
+        editTextDestination.setFocusable(false);
+        editTextDestination.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                editTextDestination.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
         checkBoxFreeway = (CheckBox) findViewById(R.id.checkboxFreeway);
         checkBoxShowTraffic = (CheckBox) findViewById(R.id.checkboxTrafic);
         checkBoxShortest = (CheckBox) findViewById(R.id.checkboxShortest);
@@ -147,6 +169,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private TextView.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if(actionId == EditorInfo.IME_ACTION_DONE &&!TextUtils.isEmpty(startName) && !TextUtils.isEmpty
+                        (destinationName)){
+                checkBoxFreeway.setChecked(true);
+                mAvoid = "";
+                processRoute();
+                editTextStart.setFocusable(false);
+                editTextDestination.setFocusable(false);
+                return true;
+            }
+            return false;
+        }
+    };
+
     TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -162,12 +200,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void afterTextChanged(Editable s) {
             if(editTextStart.getEditableText() == s){
                 startName = s.toString();
+                return;
             }else if(editTextDestination.getEditableText() == s){
                 destinationName = s.toString();
+                return;
             }
-            processRoute();
         }
     };
+
+
 
     private void processRoute(){
         if(TextUtils.isEmpty(startName)){
@@ -240,10 +281,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return false;
         }
 
+        String origin = "";
+        if("Current location".equals(startName)){
+            origin = origin + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude();
+        }else{
+            origin = startName;
+        }
         mMap.clear();
         RoutesBuilder routesBuilder = new RoutesBuilder(this);
         try {
-            routesBuilder.build(startName, destinationName, mAvoid, mMode);
+            routesBuilder.build(origin, destinationName, mAvoid, mMode);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -336,15 +383,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             checkPermission(REQUEST_CODE_ZOOM_INTO_CURRENT_LOCATION);
             return;
         }
-        Location currentDeviceLocation = LocationServices.FusedLocationApi.getLastLocation(
+        mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        if (currentDeviceLocation != null) {
+        if (mCurrentLocation != null) {
             mMap.clear();
-            mLatLng = new LatLng(currentDeviceLocation.getLatitude(), currentDeviceLocation.getLongitude());
+            mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(mLatLng);
             markerOptions.title(getString(R.string.current_position_title));
             mMap.addMarker(markerOptions);
+            editTextStart.setText("Current location");
             focusToAPoint(mLatLng, DEFAULT_ZOOM_LEVEL);
             mMap.setMyLocationEnabled(true);
 

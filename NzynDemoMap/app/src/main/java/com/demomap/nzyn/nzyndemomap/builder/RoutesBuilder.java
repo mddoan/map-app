@@ -51,6 +51,4 @@ public class RoutesBuilder implements GoogleMapsClient.GoogleMapsClientListener{
         void onRouteBuilderFailure();
     }
 
-    //https://maps.googleapis.com/maps/api/directions/json?origin=Chicago,IL&destination=Los+Angeles,
-    // CA&waypoints=Joplin,MO|Oklahoma+City,OK&key=YOUR_API_KEY
 }
