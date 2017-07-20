@@ -1,0 +1,135 @@
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:map="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="com.demomap.nzyn.nzyndemomap.MapsActivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.29"
+        android:background="@drawable/map_landscape"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp">
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Start:"/>
+
+                <EditText
+                    android:id="@+id/editTextStart"
+                    style="@style/editTextStyleLandscape"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Destination:"/>
+
+                <EditText
+                    android:id="@+id/editTextDestination"
+                    style="@style/editTextStyleLandscape"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:weightSum="3">
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/checkboxTrafic"
+                    style="@style/checkboxStyleLandscape"
+                    android:buttonTint="@color/colorWhite"
+                    android:onClick="onCheckboxClicked"/>
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Show Traffic:"
+                    android:layout_marginLeft="20dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/checkboxFreeway"
+                    style="@style/checkboxStyleLandscape"
+                    android:buttonTint="@color/colorWhite"
+                    android:onClick="onCheckboxClicked"/>
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Use Freeways:"
+                    android:layout_marginLeft="20dp"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/checkboxShortest"
+                    style="@style/checkboxStyleLandscape"
+                    android:buttonTint="@color/colorWhite"
+                    android:onClick="onCheckboxClicked"/>
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Shortest Distance:"
+                    android:layout_marginLeft="20dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="vertical"
+                android:gravity="right">
+                <TextView
+                    style="@style/labelStyleLandscape"
+                    android:text="Time to Destination:"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/dividedScreenContainer"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewDuration"
+                    style="@style/editTextStyleLandscape"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.71"/>
+
+</LinearLayout>
